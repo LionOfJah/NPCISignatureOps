@@ -17,4 +17,9 @@ public class ResponseModel {
 	public void setResponse(String response) {
 		this.response = response;
 	}
+
+	public ResponseModel() {
+		super();
+		
+	}
 }

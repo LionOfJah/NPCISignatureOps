@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.XMLSignature;
-import javax.xml.crypto.dsig.XMLSignature.SignatureValue;
 import javax.xml.crypto.dsig.XMLSignatureException;
 import javax.xml.crypto.dsig.XMLSignatureFactory;
 import javax.xml.crypto.dsig.dom.DOMValidateContext;
@@ -13,6 +12,7 @@ import javax.xml.crypto.dsig.dom.DOMValidateContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -51,6 +51,7 @@ public class VerifyDigitalSign {
       throw new SignatureMethodAlgo("Signature method is different in the documenet. Use http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
     } 
     Node digestNode = document.getElementsByTagName("DigestMethod").item(0);
+   
     String digestAlgo = digestNode.getAttributes().getNamedItem("Algorithm").getNodeValue();
     if (!digestAlgo.equals("http://www.w3.org/2001/04/xmlenc#sha256")) {
       LOGGER.warning("Digest method is different in the documenet. Use http://www.w3.org/2001/04/xmlenc#sha256");
@@ -64,7 +65,8 @@ public class VerifyDigitalSign {
     
     DOMValidateContext valContext = new DOMValidateContext(this.pubKey, signatureNode.item(0));
     XMLSignature signature = xmlSigfactory.unmarshalXMLSignature(valContext);
-    
+
+
     validFlag = signature.validate(valContext);
    
     if (validFlag) {
@@ -75,4 +77,9 @@ public class VerifyDigitalSign {
     } 
     return validFlag;
   }
+
+public VerifyDigitalSign() {
+	super();
+	
+}
 }

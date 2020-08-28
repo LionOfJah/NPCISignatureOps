@@ -65,7 +65,12 @@ public class XmlDigitalSigner {
 	  trans =tf.newTransformer(); 
 	  }
   
-  public String generateDigitalSignature(Document document) throws SAXException, IOException, ParserConfigurationException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, MarshalException, XMLSignatureException, TransformerException {
+  public XmlDigitalSigner() {
+		super();
+		
+	}
+
+public String generateDigitalSignature(Document document) throws SAXException, IOException, ParserConfigurationException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, MarshalException, XMLSignatureException, TransformerException {
     if (document == null) {
       LOGGER.warning("document is null unable verify signature");
       throw new NullPointerException("document is null unable verify signature");

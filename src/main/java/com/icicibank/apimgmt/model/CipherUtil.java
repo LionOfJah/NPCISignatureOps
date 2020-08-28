@@ -15,13 +15,20 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.stereotype.Component;
 
-
+@Component
 public class CipherUtil {
   private static final Logger LOGGER = Logger.getLogger(CipherUtil.class.getName());
   
   private String CIPHER_ALGO = null;
   
-  public CipherUtil(String algorithm) {
+  
+  
+  public CipherUtil() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public CipherUtil(String algorithm) {
     LOGGER.info("Signature Library Version : 1.0.0");
     this.CIPHER_ALGO = algorithm;
   }

@@ -2,9 +2,16 @@ package com.icicibank.apimgmt.model;
 
 import org.springframework.stereotype.Component;
 
-
+@Component
 public class Constants {
-  protected static final String LIB_VERSION = "1.0.0";
+	
+	
+  public Constants() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+protected static final String LIB_VERSION = "1.0.0";
   
   protected static final String SIGNATURE_METHOD_ALGO = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
   
