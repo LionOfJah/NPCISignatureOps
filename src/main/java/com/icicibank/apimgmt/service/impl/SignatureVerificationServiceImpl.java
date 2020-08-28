@@ -45,8 +45,10 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 	PublicKey publickey;
 	
 	@Value("${app.publickey.path}")
-	String filePath;
+	String publicKeyPath;
 	
+	@Value("${app.privateKey.path}")
+	String privateKeyPath;
 	@Autowired
 	XmlDigitalSigner xmlDigitalSigner;
 	
@@ -81,7 +83,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		    }
 		});
 		//reader.lines().forEach(i->System.out.println(i.toString()));
-		PublicKey publicKey=getPublicKey(filePath); 
+		PublicKey publicKey=getPublicKey(publicKeyPath); 
 		verifySign= new VerifyDigitalSign(publicKey);
 		
 		boolean flag=verifySign.isXmlDigitalSignatureValid(doc);
@@ -112,7 +114,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		
 		Document doc = docBuilder.parse(reader);
 		
-		PrivateKeyEntry privateKeyEntry = getPrivateKeyEntry();
+		PrivateKeyEntry privateKeyEntry = getPrivateKeyEntry(privateKeyPath);
 		
 		XmlDigitalSigner xmlDigitalSigner = new XmlDigitalSigner(privateKeyEntry);
 		
@@ -122,7 +124,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 	}
 	
 	@Bean
-	public PrivateKeyEntry getPrivateKeyEntry()	
+	public PrivateKeyEntry getPrivateKeyEntry(@Value("${app.privateKey.path}")String privateKeyPath)	
 	{
 		FileInputStream keyStoreInputStream = null;
 		PrivateKeyEntry privateKeyEntry = null;
@@ -130,7 +132,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		try 
 		{
 			KeyStore ks 			 = KeyStore.getInstance("PKCS12");
-			String keyStoreFile 	 = "C:\\Users\\jitendra_rawat\\Downloads\\Icici_proj_docs\\IciciCertificate\\PublicPrivate\\ICIC0TREA00_15-04-2020T182123.pfx";
+			String keyStoreFile 	 = privateKeyPath;
 			char[] ketStrorePwdArray = "pfxfile123".toCharArray();
 			keyStoreInputStream 	 = new FileInputStream(keyStoreFile);
 			ks.load(keyStoreInputStream, ketStrorePwdArray);

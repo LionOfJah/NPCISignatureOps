@@ -44,7 +44,7 @@ public class DigitalSignController {
 		return null;
 	} 
 	
-	@PostMapping(value ="/doSignature",consumes = "application/xml",produces = "text/plain")
+	@PostMapping(value ="/doSignature",consumes = "application/xml",produces = "application/xml")
 	public ResponseEntity<String> doDigitalSignature(InputStream input) {
 		String signedXml=null;
 		try {
