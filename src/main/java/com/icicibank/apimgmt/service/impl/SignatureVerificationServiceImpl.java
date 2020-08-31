@@ -3,7 +3,7 @@ package com.icicibank.apimgmt.service.impl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.StringReader;
 import java.security.KeyStore;
 import java.security.KeyStore.PrivateKeyEntry;
 import java.security.PublicKey;
@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -53,7 +54,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 	XmlDigitalSigner xmlDigitalSigner;
 	
 	@Override
-	public String verifySignature(InputStream input) throws SAXException, IOException, ParserConfigurationException, SignatureMethodAlgo, DigestMethodAlgo, MarshalException, XMLSignatureException,Exception {
+	public String verifySignature(String input) throws SAXException, IOException, ParserConfigurationException, SignatureMethodAlgo, DigestMethodAlgo, MarshalException, XMLSignatureException,Exception {
 		
 		
 		
@@ -63,8 +64,8 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		
 	
 		//Document doc = docBuilder.parse(new InputSource(reader));
-		
-		Document doc = docBuilder.parse(input);
+		InputSource sourceReader = new InputSource(new StringReader(input));
+		Document doc = docBuilder.parse(sourceReader);
 		
 		docBuilder.setErrorHandler(new ErrorHandler() {
 		    @Override
@@ -105,20 +106,23 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 	}
 
 	@Override
-	public String doDigitalSignature(InputStream reader) throws SAXException, IOException, ParserConfigurationException,
+	public String doDigitalSignature(String reader) throws SAXException, IOException, ParserConfigurationException,
 			SignatureMethodAlgo, DigestMethodAlgo, MarshalException, XMLSignatureException, Exception {
 		
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		builderFactory.setNamespaceAware(true);
 		DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
 		
-		Document doc = docBuilder.parse(reader);
+		InputSource sourceReader = new InputSource(new StringReader(reader));
+		Document doc = docBuilder.parse(sourceReader);
 		
 		PrivateKeyEntry privateKeyEntry = getPrivateKeyEntry(privateKeyPath);
 		
 		XmlDigitalSigner xmlDigitalSigner = new XmlDigitalSigner(privateKeyEntry);
 		
 		String sign = xmlDigitalSigner.generateDigitalSignature(doc);
+		
+		logger.info("Singnature "+sign);
 		
 		return sign;
 	}

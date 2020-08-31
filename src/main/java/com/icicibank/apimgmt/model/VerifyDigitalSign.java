@@ -35,10 +35,10 @@ public class VerifyDigitalSign {
       LOGGER.warning("document is null unable verify signature");
       throw new NullPointerException("document is null unable verify signature");
     } 
-    document.getDocumentElement().normalize();
+//    document.getDocumentElement().normalize();
     
     
-    NodeList signatureNode = document.getElementsByTagNameNS("http://www.w3.org/2000/09/xmldsig#", "Signature");
+    NodeList signatureNode = document.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature");
     //NodeList signatureNode = document.getElementsByTagName("Signature");
     if (signatureNode.getLength() == 0) {
       LOGGER.warning("No Signature found in the document");
@@ -64,6 +64,7 @@ public class VerifyDigitalSign {
     LOGGER.info("public key "+this.pubKey);
     
     DOMValidateContext valContext = new DOMValidateContext(this.pubKey, signatureNode.item(0));
+    LOGGER.info("valContext" +  valContext);
     XMLSignature signature = xmlSigfactory.unmarshalXMLSignature(valContext);
 
 

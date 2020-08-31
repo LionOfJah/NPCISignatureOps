@@ -77,6 +77,8 @@ public String generateDigitalSignature(Document document) throws SAXException, I
     } 
     Document signDoc = signXml(document);
     StringWriter stringWriter = new StringWriter();
+    StreamResult str = new StreamResult(stringWriter);
+    
     trans.transform(new DOMSource(signDoc), new StreamResult(stringWriter));
     return stringWriter.getBuffer().toString();
   }

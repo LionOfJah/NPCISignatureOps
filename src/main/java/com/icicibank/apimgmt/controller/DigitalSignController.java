@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,10 +29,10 @@ public class DigitalSignController {
 	@Autowired
 	SignatureVerificationService verServ;
 	
-	@PostMapping(value ="/verifySignature",consumes = "text/plain",produces = "application/xml")
-	public ResponseEntity<String> verifySignature(InputStream input){
+	@PostMapping(value ="/verifySignature")
+	public ResponseEntity<String> verifySignature(@RequestBody String input){
 		
-		BufferedReader buffreader = new BufferedReader(new InputStreamReader(input));
+		//BufferedReader buffreader = new BufferedReader(new InputStreamReader(input));
 		
 		try {
 			verServ.verifySignature(input);
@@ -44,8 +44,8 @@ public class DigitalSignController {
 		return null;
 	} 
 	
-	@PostMapping(value ="/doSignature",consumes = "application/xml",produces = "application/xml")
-	public ResponseEntity<String> doDigitalSignature(InputStream input) {
+	@PostMapping(value ="/doSignature")
+	public ResponseEntity<String> doDigitalSignature(@RequestBody String input) {
 		String signedXml=null;
 		try {
 			signedXml=verServ.doDigitalSignature(input);

@@ -20,7 +20,7 @@ public interface SignatureVerificationService {
 
 	//public String verifySignature(BufferedReader reader) throws SAXException, IOException,ParserConfigurationException,SignatureMethodAlgo,DigestMethodAlgo, MarshalException, XMLSignatureException,Exception;
 
-	public String verifySignature(InputStream reader) throws SAXException, IOException,ParserConfigurationException,SignatureMethodAlgo,DigestMethodAlgo, MarshalException, XMLSignatureException,Exception;
+	public String verifySignature(String reader) throws SAXException, IOException,ParserConfigurationException,SignatureMethodAlgo,DigestMethodAlgo, MarshalException, XMLSignatureException,Exception;
 	
-	public String doDigitalSignature(InputStream reader)throws SAXException, IOException,ParserConfigurationException,SignatureMethodAlgo,DigestMethodAlgo, MarshalException, XMLSignatureException,Exception;
+	public String doDigitalSignature(String reader)throws SAXException, IOException,ParserConfigurationException,SignatureMethodAlgo,DigestMethodAlgo, MarshalException, XMLSignatureException,Exception;
 }
