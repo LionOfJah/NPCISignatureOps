@@ -64,7 +64,7 @@ public class VerifyDigitalSign {
     LOGGER.info("public key "+this.pubKey);
     
     DOMValidateContext valContext = new DOMValidateContext(this.pubKey, signatureNode.item(0));
-    LOGGER.info("valContext" +  valContext);
+    
     XMLSignature signature = xmlSigfactory.unmarshalXMLSignature(valContext);
 
 

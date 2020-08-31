@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.icicibank.apimgmt.model.DigestMethodAlgo;
+import com.icicibank.apimgmt.model.ResponseModel;
 import com.icicibank.apimgmt.model.SignatureMethodAlgo;
 import com.icicibank.apimgmt.model.VerifyDigitalSign;
 import com.icicibank.apimgmt.model.XmlDigitalSigner;
@@ -56,7 +57,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 	@Override
 	public String verifySignature(String input) throws SAXException, IOException, ParserConfigurationException, SignatureMethodAlgo, DigestMethodAlgo, MarshalException, XMLSignatureException,Exception {
 		
-		
+		String response = "";
 		
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		builderFactory.setNamespaceAware(true);
@@ -89,7 +90,12 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		
 		boolean flag=verifySign.isXmlDigitalSignatureValid(doc);
 		logger.info("flag value "+flag);
-		return null;
+		if(flag) {
+			response="Signature is Valid";
+		}else {
+			response="Signature is invalid";
+		}
+		return response;
 	}
 	
 	@Bean

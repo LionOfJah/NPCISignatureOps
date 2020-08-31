@@ -23,6 +23,7 @@ public class DigitalSignController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	
 	@Autowired
 	ResponseModel responseModel;
 	
@@ -30,18 +31,19 @@ public class DigitalSignController {
 	SignatureVerificationService verServ;
 	
 	@PostMapping(value ="/verifySignature")
-	public ResponseEntity<String> verifySignature(@RequestBody String input){
+	public ResponseEntity<ResponseModel> verifySignature(@RequestBody String input){
 		
 		//BufferedReader buffreader = new BufferedReader(new InputStreamReader(input));
-		
+		String signatureStatus=null;
 		try {
-			verServ.verifySignature(input);
+			signatureStatus=verServ.verifySignature(input);
+			responseModel.setResponse(signatureStatus);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info(input.toString());
-		return null;
+		return ResponseEntity.ok().body(responseModel);
 	} 
 	
 	@PostMapping(value ="/doSignature")
