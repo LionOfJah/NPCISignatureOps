@@ -90,8 +90,13 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		
 		boolean flag=verifySign.isXmlDigitalSignatureValid(doc);
 		logger.info("flag value "+flag);
+		
 		if(flag) {
-			response="Signature is Valid";
+			//response="Signature is Valid";
+			response=input.substring(0, input.indexOf("<Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">"));
+			String endTag=input.substring(input.indexOf("</Signature>"),input.length());
+			endTag = endTag.substring(endTag.lastIndexOf("<"), endTag.lastIndexOf(">")+1);
+			
 		}else {
 			response="Signature is invalid";
 		}
