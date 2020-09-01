@@ -96,7 +96,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 			response=input.substring(0, input.indexOf("<Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">"));
 			String endTag=input.substring(input.indexOf("</Signature>"),input.length());
 			endTag = endTag.substring(endTag.lastIndexOf("<"), endTag.lastIndexOf(">")+1);
-			
+			response = response.concat(endTag);
 		}else {
 			response="Signature is invalid";
 		}
