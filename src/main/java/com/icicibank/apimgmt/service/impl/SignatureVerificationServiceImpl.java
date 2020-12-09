@@ -148,7 +148,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		{
 			KeyStore ks 			 = KeyStore.getInstance("PKCS12");
 			String keyStoreFile 	 = privateKeyPath;
-			char[] ketStrorePwdArray = "icicneft".toCharArray();
+			char[] ketStrorePwdArray = "pfxfile123".toCharArray();
 			keyStoreInputStream 	 = new FileInputStream(keyStoreFile);
 			ks.load(keyStoreInputStream, ketStrorePwdArray);
 
