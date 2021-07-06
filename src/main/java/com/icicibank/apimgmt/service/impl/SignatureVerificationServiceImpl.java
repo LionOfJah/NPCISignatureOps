@@ -133,7 +133,7 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		
 		String sign = xmlDigitalSigner.generateDigitalSignature(doc);
 		
-		logger.info("Singnature "+sign);
+		logger.info("Signature "+sign);
 		
 		return sign;
 	}
@@ -148,7 +148,9 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 		{
 			KeyStore ks 			 = KeyStore.getInstance("PKCS12");
 			String keyStoreFile 	 = privateKeyPath;
-			char[] ketStrorePwdArray = "pfxfile123".toCharArray();
+			//char[] ketStrorePwdArray = "pfxfile123".toCharArray();
+			char[] ketStrorePwdArray = "7layer".toCharArray();
+			
 			keyStoreInputStream 	 = new FileInputStream(keyStoreFile);
 			ks.load(keyStoreInputStream, ketStrorePwdArray);
 
@@ -156,7 +158,8 @@ public class SignatureVerificationServiceImpl implements SignatureVerificationSe
 			alias 		 	= (String) ks.aliases().nextElement();
 
 			privateKeyEntry = (PrivateKeyEntry) ks.getEntry(alias, 
-								new KeyStore.PasswordProtection(ketStrorePwdArray));
+			
+					new KeyStore.PasswordProtection(ketStrorePwdArray));
 		} 
 		catch (Exception e) 
 		{
